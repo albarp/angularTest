@@ -5,10 +5,13 @@ import { Component } from "@angular/core";
     templateUrl: './product-list-componet.html'
 })
 export class ProductListComponent{
+
     pageTitle: string = 'Product List!';
 
     imageWidth: Number = 50;
     imageMargin: Number = 2;
+
+    showImage: boolean = false;
 
     products: any[] =[
         {
@@ -62,4 +65,8 @@ export class ProductListComponent{
           "imageUrl": "https://openclipart.org/image/300px/svg_to_png/120337/xbox-controller_01.png"
         }
       ];
+
+      toggleImage(): void{
+        this.showImage = !this.showImage;
+      }
 }
