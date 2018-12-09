@@ -5,9 +5,9 @@ import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 
 // solo da angular sei in poi
-// @Injectable({
-//   providedIn: 'root',
-// })
+@Injectable({
+  providedIn: 'root',
+})
 @Injectable()
 export class ProductService {
 

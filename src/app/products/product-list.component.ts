@@ -3,7 +3,7 @@ import { IProduct } from './product';
 import { ProductService } from './product.service';
 
 @Component({
-    selector: 'app-pm-products',
+    // selector: 'app-pm-products', non serve se lo raggiungiamo con il binding
     templateUrl: './product-list-componet.html',
     styleUrls: ['./product-list-component.css']
 })
