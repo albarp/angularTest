@@ -17,6 +17,7 @@ export class ProductListComponent implements OnInit {
     showImage = false;
     errorMessage = '';
 
+    // Comodo per essere avvisati ogni volta che il valore viene cambiato
     _listFilter: string;
     get listFilter(): string {
       return this._listFilter;
@@ -49,6 +50,11 @@ export class ProductListComponent implements OnInit {
 
       onRatingClicked(message: string): void {
         this.pageTitle = message;
+      }
+
+      onFilterChange(filter: string): void {
+        this.listFilter = filter; // Necessario, perchè non abbiamo più il two way binding a gratis
+        this.performFilter(this.listFilter);
       }
 
       ngOnInit(): void {

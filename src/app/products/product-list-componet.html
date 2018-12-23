@@ -7,6 +7,12 @@
             <div class="col-md-2">Filter by:</div>
             <div class="col-md-4">
                 <input type="text" [(ngModel)]='listFilter'/>
+
+                <!-- Volendo si può anche separare la parte di property binding da quella di update --> 
+                    <!--  <input type="text" 
+                        [ngModel]='listFilter'  ---- property binding: il valore va dal .ts all'html
+                        (ngModelChange)='onFilterChange($event)'> ------ se il valore cambia nella pagina, viene chiamato il metodo specificato
+                    -->                 
             </div>
         </div>
         <div class="row">
@@ -16,7 +22,7 @@
         </div>
         <div class="table-responsive">
             <table class="table"
-            *ngIf='products && products.length > 0'>
+            *ngIf='products?.length'>
                 <thead>
                     <tr>
                         <th>
