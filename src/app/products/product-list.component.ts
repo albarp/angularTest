@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { IProduct } from './product';
 import { ProductService } from './product.service';
+import { NgModel } from '@angular/forms';
 
 @Component({
     // selector: 'app-pm-products', non serve se lo raggiungiamo con il binding
     templateUrl: './product-list-componet.html',
     styleUrls: ['./product-list-component.css']
 })
-export class ProductListComponent implements OnInit {
-
+export class ProductListComponent implements OnInit, AfterViewInit {
 
     pageTitle = 'Product List!';
 
@@ -30,6 +30,9 @@ export class ProductListComponent implements OnInit {
     }
 
     filteredProducts: IProduct[];
+
+    @ViewChild('filterRef') filterRef: ElementRef; // per recuperare la template reference variable
+    // @ViewChild(NgModel) filterInput: NgModel; // diventa un event emitter
 
     products: IProduct[] = [];
 
@@ -53,7 +56,8 @@ export class ProductListComponent implements OnInit {
       }
 
       onFilterChange(filter: string): void {
-        this.listFilter = filter; // Necessario, perchè non abbiamo più il two way binding a gratis
+        // Se usiamo il two way binding long way
+        // this.listFilter = filter; // Necessario, perchè non abbiamo più il two way binding a gratis
         this.performFilter(this.listFilter);
       }
 
@@ -63,5 +67,16 @@ export class ProductListComponent implements OnInit {
           this.filteredProducts = this.products;
         },
         error => this.errorMessage = <any>error);
+      }
+
+      ngAfterViewInit(): void {
+        // Se usiamo la templare reference variable
+        if (this.filterRef.nativeElement) { // Meglio controllare perchè, andando direttamente sul DOM, potrebbe essere che alcuni metodi manchino
+          this.filterRef.nativeElement.focus();
+        }
+
+        // this.filterInput.valueChanges.subscribe(
+        //   () => this.performFilter(this.listFilter)
+        // );
       }
 }

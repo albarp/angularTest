@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-2">Filter by:</div>
             <div class="col-md-4">
-                <input type="text" [(ngModel)]='listFilter'/>
+                <input type="text" [(ngModel)]='listFilter' #filterRef/> <!-- Template reference variable-->
 
                 <!-- Volendo si può anche separare la parte di property binding da quella di update --> 
                     <!--  <input type="text" 
