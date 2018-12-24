@@ -5,8 +5,11 @@
       [(ngModel)]='listFilter' #filterElement/>              
   </div>
 </div>
-<div class="row" [hidden]='!listFilter'>
+<div class="row" *ngIf='displayDetail'>
   <div class="col-md-6">
-      <h4>Filtered by: {{listFilter}}</h4>
+      <h4>
+        Filtered by: {{listFilter}}
+        {{hitMessage}}
+      </h4>
   </div>
 </div>
