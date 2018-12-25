@@ -1,5 +1,5 @@
 export class IProduct {
-    productId: number;
+    productId: number | null;
     productName: string;
     productCode: string;
     releaseDate: string;
@@ -7,4 +7,6 @@ export class IProduct {
     price: number;
     starRating: number;
     imageUrl: string;
+    category: string;
+    tags?: string[];
 }

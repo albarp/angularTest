@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { IProduct } from './product';
-import { ProductService } from './product.service';
+import { Product2Service } from './product2.service';
 import { CriteriaComponent } from '../shared/criteria/criteria.component';
 import { ProductParameterService } from './product-parameter.service';
 
@@ -47,7 +47,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
 
     products: IProduct[] = [];
 
-      constructor(private productService: ProductService,
+      constructor(private product2Service: Product2Service,
         private productParameterService: ProductParameterService) {
       }
 
@@ -78,7 +78,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
       }
 
       ngOnInit(): void {
-        this.productService.getProducts().subscribe(products => {
+        this.product2Service.getProducts().subscribe(products => {
           if (products) {
           this.products = products;
           // Questo fa scattare il setter di CriteriaComponent, che a sua volta fa scattare

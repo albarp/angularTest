@@ -11,11 +11,11 @@ export class ProductDetailComponent implements OnInit {
   pageTitle = 'Product detail';
   product: IProduct;
   constructor(
-    private acticatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit() {
-    const id = +this.acticatedRoute.snapshot.paramMap.get('id'); // traforma il valore ritornato da get in un numero
+    const id = +this.activatedRoute.snapshot.paramMap.get('id'); // traforma il valore ritornato da get in un numero
     this.pageTitle = `${id}`;
     this.product = {
       'productId': 1,
@@ -25,7 +25,8 @@ export class ProductDetailComponent implements OnInit {
       'description': 'Leaf rake with 48-inch wooden handle.',
       'price': 19.95,
       'starRating': 3.2,
-      'imageUrl': 'https://openclipart.org/image/300px/svg_to_png/26215/Anonymous_Leaf_Rake.png'
+      'imageUrl': 'https://openclipart.org/image/300px/svg_to_png/26215/Anonymous_Leaf_Rake.png',
+      'category': ''
     };
   }
 
