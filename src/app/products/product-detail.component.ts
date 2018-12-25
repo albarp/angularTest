@@ -1,37 +1,40 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
 import { IProduct } from './product';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Product2Service } from './product2.service';
 
 @Component({
-  // selector: 'app-product-detail', Non serve perchè non lo richiamiamo nell'html, ma ci navighiamo con il routing
-  templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.css']
+    // selector: // non serve perchè ci arriviamo con il routing
+    templateUrl: './product-detail.component.html',
+    styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit {
-  pageTitle = 'Product detail';
-  product: IProduct;
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private router: Router) { }
+    pageTitle: 'Product Detail';
+    product: IProduct;
+    errorMessage: string;
 
-  ngOnInit() {
-    const id = +this.activatedRoute.snapshot.paramMap.get('id'); // traforma il valore ritornato da get in un numero
-    this.pageTitle = `${id}`;
-    this.product = {
-      'productId': 1,
-      'productName': 'Leaf Rake',
-      'productCode': 'GDN-0011',
-      'releaseDate': 'March 19, 2016',
-      'description': 'Leaf rake with 48-inch wooden handle.',
-      'price': 19.95,
-      'starRating': 3.2,
-      'imageUrl': 'https://openclipart.org/image/300px/svg_to_png/26215/Anonymous_Leaf_Rake.png',
-      'category': ''
-    };
-  }
+    constructor(private product2Service: Product2Service,
+                private router: Router,
+                private route: ActivatedRoute) {
+    }
 
-  onBack(): void {
-    this.router.navigate(['/products']);
-  }
+    ngOnInit(): void {
+        const param = this.route.snapshot.paramMap.get('id');
+        if (param) {
+            const id = +param; // trasforma una stringa in un intero
+            this.getProduct(id);
+        }
+    }
 
+    getProduct(id: number) {
+        this.product2Service.getProduct(id).subscribe(
+          product => this.product = product,
+          error => this.errorMessage = <any>error
+        );
+    }
+
+    onBack(): void {
+        this.router.navigate(['/products']);
+    }
 }

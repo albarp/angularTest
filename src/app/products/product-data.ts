@@ -7,7 +7,7 @@ export class ProductData implements InMemoryDbService {
     createDb() {
         const products: IProduct[] = [
             {
-                'productId': 1,
+                'id': 1,
                 'productName': 'Leaf Rake',
                 'productCode': 'GDN-0011',
                 'releaseDate': 'March 19, 2017',
@@ -19,7 +19,7 @@ export class ProductData implements InMemoryDbService {
                 'tags': ['rake', 'leaf', 'yard', 'home']
             },
             {
-                'productId': 2,
+                'id': 2,
                 'productName': 'Garden Cart',
                 'productCode': 'GDN-0023',
                 'releaseDate': 'March 18, 2017',
@@ -30,7 +30,7 @@ export class ProductData implements InMemoryDbService {
                 'category': 'Garden'
             },
             {
-                'productId': 5,
+                'id': 5,
                 'productName': 'Hammer',
                 'productCode': 'TBX-0048',
                 'releaseDate': 'May 21, 2017',
@@ -42,7 +42,7 @@ export class ProductData implements InMemoryDbService {
                 'tags': ['tools', 'hammer', 'construction']
             },
             {
-                'productId': 8,
+                'id': 8,
                 'productName': 'Saw',
                 'productCode': 'TBX-0022',
                 'releaseDate': 'May 15, 2017',
@@ -53,11 +53,11 @@ export class ProductData implements InMemoryDbService {
                 'category': 'Toolbox',
             },
             {
-                'productId': 10,
-                'productName': 'VproductIdeo Game Controller',
+                'id': 10,
+                'productName': 'Vproductideo Game Controller',
                 'productCode': 'GMG-0042',
                 'releaseDate': 'October 15, 2017',
-                'description': 'Standard two-button vproductIdeo game controller',
+                'description': 'Standard two-button vproductideo game controller',
                 'price': 35.95,
                 'starRating': 4.6,
                 'imageUrl': 'https://openclipart.org/image/300px/svg_to_png/120337/xbox-controller_01.png',

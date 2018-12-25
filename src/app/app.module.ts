@@ -17,7 +17,7 @@ import { ProductData } from './products/product-data';
   imports: [
     BrowserModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(ProductData),
+    HttpClientInMemoryWebApiModule.forRoot(ProductData, { delay: 1000 }),
     ProductModule, // Questo deve venire prima perchè, a sua volta, registra delle regole di routing che vanno
     AppRoutingModule // valutate prima di quelle specificate in AppRoutingModule (che è quello globale)
   ],

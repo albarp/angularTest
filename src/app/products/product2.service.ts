@@ -15,11 +15,19 @@ import {catchError, tap} from 'rxjs/operators';
 export class Product2Service {
     private productsUrl = 'api/products';
 
+    private products: IProduct[];
+
     constructor(private http: HttpClient) { }
 
     getProducts(): Observable<IProduct[]> {
+
+        if (this.products) {
+            return of(this.products);
+        }
+
         return this.http.get<IProduct[]>(this.productsUrl).pipe(
           tap(data => console.log('Data: ' + JSON.stringify(data))),
+          tap(data => this.products = data),
           catchError(this.handleError)
         );
     }
@@ -28,6 +36,14 @@ export class Product2Service {
         if (id === 0) {
             return of(this.initializeProduct());
         }
+
+        if (this.products) {
+            const foundItem = this.products.find(item => item.id === id);
+            if (foundItem) {
+                return of(foundItem);
+            }
+        }
+
         const url = `${this.productsUrl}/${id}`;
         return this.http.get<IProduct>(url)
                         .pipe(
@@ -38,7 +54,7 @@ export class Product2Service {
 
     saveProduct(product: IProduct): Observable<IProduct> {
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        if (product.productId === 0) {
+        if (product.id === 0) {
             return this.createProduct(product, headers);
         }
         return this.updateProduct(product, headers);
@@ -56,7 +72,7 @@ export class Product2Service {
     }
 
     private createProduct(product: IProduct, headers: HttpHeaders): Observable<IProduct> {
-        product.productId = null;
+        product.id = null;
         return this.http.post<IProduct>(this.productsUrl, product,  { headers: headers} )
                         .pipe(
                             tap(data => console.log('createProduct: ' + JSON.stringify(data))),
@@ -65,10 +81,10 @@ export class Product2Service {
     }
 
     private updateProduct(product: IProduct, headers: HttpHeaders): Observable<IProduct> {
-        const url = `${this.productsUrl}/${product.productId}`;
+        const url = `${this.productsUrl}/${product.id}`;
         return this.http.put<IProduct>(url, product, { headers: headers} )
                         .pipe(
-                            tap(data => console.log('updateProduct: ' + product.productId)),
+                            tap(data => console.log('updateProduct: ' + product.id)),
                             catchError(this.handleError)
                         );
     }
@@ -76,7 +92,7 @@ export class Product2Service {
     private initializeProduct(): IProduct {
         // Return an initialized object
         return {
-            productId: 0,
+            id: 0,
             productName: '',
             productCode: '',
             category: '',
