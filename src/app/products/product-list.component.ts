@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { IProduct } from './product';
 import { ProductService } from './product.service';
 import { CriteriaComponent } from '../shared/criteria/criteria.component';
+import { ProductParameterService } from './product-parameter.service';
 
 @Component({
     // selector: 'app-pm-products', non serve se lo raggiungiamo con il binding
@@ -11,7 +12,6 @@ import { CriteriaComponent } from '../shared/criteria/criteria.component';
 export class ProductListComponent implements OnInit, AfterViewInit {
 
     pageTitle = 'Product List!';
-    showImage = false;
     includeDetail = true;
 
     imageWidth: Number = 50;
@@ -30,6 +30,13 @@ export class ProductListComponent implements OnInit, AfterViewInit {
       this.filteredProducts = this.listFilter ? this.performFilter(this.listFilter) : this.products;
     }
 
+    get showImage(): boolean {
+      return this.productParameterService.showImage;
+    }
+    set showImage(val: boolean) {
+      this.productParameterService.showImage = true;
+    }
+
     filteredProducts: IProduct[];
 
     @ViewChild('filterRef') filterRef: ElementRef; // per recuperare la template reference variable
@@ -40,7 +47,8 @@ export class ProductListComponent implements OnInit, AfterViewInit {
 
     products: IProduct[] = [];
 
-      constructor(private productService: ProductService) {
+      constructor(private productService: ProductService,
+        private productParameterService: ProductParameterService) {
       }
 
       toggleImage(): void {
@@ -73,7 +81,11 @@ export class ProductListComponent implements OnInit, AfterViewInit {
         this.productService.getProducts().subscribe(products => {
           if (products) {
           this.products = products;
-          this.filteredProducts = this.performFilter(this.parentListFilter);
+          // Questo fa scattare il setter di CriteriaComponent, che a sua volta fa scattare
+          // l'emitter filterValueChanged, sempre di CriteriaComponent, che, in definitiva chiama
+          // la funzione onFilterValueChanged qui sotto (perchè, nel template di questo component,
+          // ci si registra all'evento filterValueChanged di CriteriaComponent)
+          this.filterComponent.listFilter = this.productParameterService.filterBy;
           }
         },
         error => this.errorMessage = <any>error);
@@ -95,8 +107,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
       }
 
       onFilterValueChanged(newFilter: string): void {
-        if (newFilter) {
+          this.productParameterService.filterBy = newFilter;
           this.filteredProducts = this.performFilter(newFilter);
-        }
       }
 }
