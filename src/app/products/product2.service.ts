@@ -27,7 +27,7 @@ export class Product2Service {
 
         return this.http.get<IProduct[]>(this.productsUrl).pipe(
           tap(data => console.log('Data: ' + JSON.stringify(data))),
-          tap(data => this.products = data),
+          tap(data => this.products = data), // aggiorno la cache locale
           catchError(this.handleError)
         );
     }
@@ -67,15 +67,22 @@ export class Product2Service {
         return this.http.delete<IProduct>(url, { headers: headers} )
                         .pipe(
                             tap(data => console.log('deleteProduct: ' + id)),
+                            tap(data => {
+                                const foundIndex = this.products.findIndex(item => item.id === id);
+                                if (foundIndex > -1) {
+                                    this.products.splice(foundIndex, 1);
+                                }
+                            }),
                             catchError(this.handleError)
                         );
     }
 
     private createProduct(product: IProduct, headers: HttpHeaders): Observable<IProduct> {
-        product.id = null;
+        product.id = null; // used by InMemoryDataService to create a new ID
         return this.http.post<IProduct>(this.productsUrl, product,  { headers: headers} )
                         .pipe(
                             tap(data => console.log('createProduct: ' + JSON.stringify(data))),
+                            tap(data => this.products.push(data)), // Update local cache
                             catchError(this.handleError)
                         );
     }
