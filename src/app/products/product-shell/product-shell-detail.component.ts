@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../product.service';
+import { Product2Service } from '../product2.service';
 import { IProduct } from '../product';
 
 @Component({
@@ -9,9 +9,11 @@ import { IProduct } from '../product';
 export class ProductShellDetailComponent implements OnInit {
     pageTitle: 'Product Detail';
 
-    product: IProduct;
+    get product(): IProduct {
+        return this.product2Service.currenProduct;
+    }
 
-    constructor(private productService: ProductService) { }
+    constructor(private product2Service: Product2Service) { }
 
     ngOnInit() {
     }
