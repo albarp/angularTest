@@ -1,0 +1,21 @@
+<div class='panel panel-primary' *ngIf='people?.length'>
+    <div class='panel-heading'>
+      Peopl
+    </div>
+  
+    <div class='panel-body'>
+      <div class='list-group'>
+        <button type='button'
+                class='list-group-item'
+                *ngFor='let person of people'
+                (click)='onPersonSelected(person)'
+                >
+          {{ person.Name }}
+        </button>
+        <button type='button'
+            (click)='onAddPerson()'>
+            Add Person
+        </button>
+      </div>
+    </div>
+  </div>

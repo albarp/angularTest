@@ -8,11 +8,17 @@ import { ProductModule } from './products/product.module';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { ProductData } from './products/product-data';
+import { ReactiveStatedestinationComponent } from './state/reactive-state/reactive-state-destination.component';
+import { ReactiveStateComponent } from './state/reactive-state/reactive-state-container.component';
+import { ReactiveStateSourceComponent } from './state/reactive-state/reactive-state-source.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    ReactiveStateComponent,
+    ReactiveStateSourceComponent,
+    ReactiveStatedestinationComponent
   ],
   imports: [
     BrowserModule,

@@ -11,6 +11,7 @@ import { Component } from '@angular/core';
         <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                 <a [routerLink]="['/products', 0, 'edit']">Add Product</a>
         </li>
+        <li><a class='nav-link' [routerLink]="['/reactiveState']">State</a></li>
       </ul>
     </nav>
     <div class='container'>
